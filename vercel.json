@@ -11,10 +11,5 @@
       "src": "/api/(.*)",
       "dest": "/api/$1"
     }
-  ],
-  "security": {
-    "bypassProtection": {
-      "paths": ["/api/*"]
-    }
-  }
+  ]
 }
