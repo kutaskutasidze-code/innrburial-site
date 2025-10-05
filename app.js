@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:3000/api'; // Change this to your deployed backend URL
+const API_URL = '/api'; // Change this to your deployed backend URL
 
 // Contact Form Handler
 document.addEventListener('DOMContentLoaded', () => {
