@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Burial of Adam - INNRBURIAL</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .book-hero {
+            padding-top: 128px;
+            padding-bottom: 80px;
+            background: #000;
+            text-align: center;
+        }
+        .book-hero h1 {
+            font-size: 80px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .book-hero-subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+        }
+        .book-cover-section {
+            padding: 120px 0;
+            background: #fff;
+        }
+        .book-cover-grid {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .book-cover-img {
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        .book-info-text h2 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.003em;
+            margin-bottom: 16px;
+        }
+        .book-info-text p {
+            font-size: 21px;
+            line-height: 1.381;
+            color: #86868b;
+            margin-bottom: 32px;
+        }
+        .book-specs {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .spec-item {
+            flex: 1;
+        }
+        .spec-label {
+            font-size: 12px;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+        .spec-value {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .video-feature {
+            padding: 120px 0;
+            background: #f5f5f7;
+        }
+        .video-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+        .video-container video {
+            width: 100%;
+            border-radius: 18px;
+        }
+        .preview-section {
+            padding: 120px 0;
+            background: #000;
+        }
+        .preview-content {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+            text-align: center;
+        }
+        .preview-content h2 {
+            font-size: 64px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 60px;
+        }
+        .preview-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        @media (max-width: 1068px) {
+            .book-cover-grid { grid-template-columns: 1fr; }
+            .preview-grid { grid-template-columns: 1fr; }
+            .book-hero h1 { font-size: 56px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo" style="margin-left: -8px;">INNRBURIAL</a>
+            <div class="nav-menu">
+                <a href="gallery.html">Gallery</a>
+                <a href="book.html">Book</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="book-order.html">Order</a>
+                <a href="book-burial.html">The Burial of Adam</a>
+                <a href="book-instruction.html">Instruction to Reality</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="book-hero">
+        <h1>The Burial of Adam</h1>
+        <p class="book-hero-subtitle">A journey through mortality and identity</p>
+        <a href="book-order.html" class="btn-primary">Order now $39.99</a>
+    </section>
+
+    <section class="book-cover-section">
+        <div class="book-cover-grid">
+            <div>
+                <img src="images/ADAM.png" alt="The Burial of Adam" class="book-cover-img">
+            </div>
+            <div class="book-info-text">
+                <h2>A comprehensive exploration</h2>
+                <p>Through literature, visual art, and philosophical inquiry, The Burial of Adam weaves together essays, poetry, and visual documentation to create an immersive meditation on endings and beginnings.</p>
+                <div class="book-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Pages</div>
+                        <div class="spec-value">240</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Format</div>
+                        <div class="spec-value">Hardcover</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Published</div>
+                        <div class="spec-value">2024</div>
+                    </div>
+                </div>
+                <a href="book-order.html" class="btn-primary">Order $39.99</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="video-feature">
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="videos/video2.mp4" type="video/mp4">
+            </video>
+        </div>
+    </section>
+
+    <section class="preview-section">
+        <div class="preview-content">
+            <h2>Inside the book</h2>
+            <div class="preview-grid">
+                <div class="preview-item"><img src="images/000A53C9-BD0F-414F-9B75-25AF36DF824F.jpeg" alt="Preview 1"></div>
+                <div class="preview-item"><img src="images/08CF5B48-6DBA-45A4-9EB8-8A9E3AAF27E2.jpeg" alt="Preview 2"></div>
+                <div class="preview-item"><img src="images/1A7AC076-4D53-4D7C-8AB5-86BF4B1E0617.jpeg" alt="Preview 3"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="gallery.html">Gallery</a>
+                <a href="book-order.html">Order</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p class="footer-copy">© 2024 INNRBURIAL. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
