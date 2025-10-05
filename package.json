@@ -1,0 +1,13 @@
+{
+  "name": "innrburial-site",
+  "version": "1.0.0",
+  "description": "INNRBURIAL website with serverless backend",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7",
+    "pg": "^8.11.3"
+  }
+}
