@@ -3,78 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order - INNRBURIAL</title>
+    <title>Pre-Order - INNRBURIAL</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .order-hero {
-            padding-top: 128px;
-            padding-bottom: 120px;
+        body {
             background: #fff;
+        }
+        .order-hero {
             text-align: center;
+            padding: 100px 40px 80px;
+            background: #fff;
         }
         .order-hero h1 {
-            font-size: 80px;
+            font-size: 72px;
             font-weight: 600;
-            letter-spacing: -0.015em;
+            letter-spacing: -0.02em;
             margin-bottom: 16px;
+            color: #1d1d1f;
         }
-        .order-subtitle {
+        .order-hero .subtitle {
             font-size: 28px;
-            font-weight: 400;
             color: #86868b;
-            margin-bottom: 60px;
+            font-weight: 400;
         }
+        
         .book-selector {
-            max-width: 1200px;
+            max-width: 500px;
             margin: 0 auto 120px;
-            padding: 0 22px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            padding: 0 40px;
         }
+        
         .book-option {
             background: #f5f5f7;
             border-radius: 18px;
-            padding: 40px 30px;
+            padding: 40px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
         }
         .book-option:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-        .book-option.featured {
-            background: #000;
-            color: #fff;
-        }
         .book-option img {
             width: 100%;
-            max-width: 250px;
+            max-width: 300px;
             margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
         .book-option h3 {
             font-size: 32px;
             font-weight: 600;
             margin-bottom: 12px;
+            color: #1d1d1f;
         }
         .book-option .price {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
             color: #0071e3;
             margin-bottom: 20px;
         }
-        .book-option.featured .price {
-            color: #fff;
-        }
         .book-option p {
             font-size: 17px;
             color: #86868b;
-            margin-bottom: 30px;
+            margin-bottom: 12px;
             line-height: 1.5;
         }
-        .book-option.featured p {
-            color: rgba(255,255,255,0.7);
+        .book-option .description {
+            font-size: 17px;
+            color: #1d1d1f;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
         .btn-order {
             display: inline-block;
@@ -85,81 +83,76 @@
             border-radius: 980px;
             font-size: 17px;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.3s;
         }
         .btn-order:hover {
             background: #0077ed;
+            transform: scale(1.05);
         }
-        .book-option.featured .btn-order {
-            background: #fff;
-            color: #000;
-        }
-        .book-option.featured .btn-order:hover {
+        
+        footer {
+            text-align: center;
+            padding: 60px 40px;
             background: #f5f5f7;
+            border-top: 1px solid #d2d2d7;
         }
-        @media (max-width: 1068px) {
-            .book-selector { grid-template-columns: 1fr; }
-            .order-hero h1 { font-size: 56px; }
+        footer p {
+            font-size: 14px;
+            color: #86868b;
+        }
+        
+        @media (max-width: 768px) {
+            .order-hero h1 {
+                font-size: 48px;
+            }
+            .order-hero .subtitle {
+                font-size: 21px;
+            }
+            .book-option {
+                padding: 30px;
+            }
+            .book-option h3 {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="nav-bar">
+    <nav class="navbar">
         <div class="nav-content">
-            <a href="index.html" class="nav-logo" style="margin-left: -8px;">INNRBURIAL</a>
-            <div class="nav-menu">
-                <a href="gallery.html">Gallery</a>
-                <a href="book-order.html">Order</a>
-                <a href="book-burial.html">The Burial of Adam</a>
-                <a href="book-instruction.html">Instruction to Reality</a>
-                <a href="contact.html">Contact</a>
-            </div>
+            <a href="index.html" class="nav-logo">INNRBURIAL</a>
+            <ul class="nav-links">
+                <li><a href="book-burial.html">The Burial of Adam</a></li>
+                <li><a href="book-instruction.html">Instruction to Reality</a></li>
+                <li><a href="book-order.html" class="active">Pre-Order</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
     <section class="order-hero">
-        <h1>Choose Your Edition</h1>
-        <p class="order-subtitle">Three perspectives. One journey.</p>
+        <h1>INNRBURIAL</h1>
+        <p class="subtitle">Reserve your copy today</p>
     </section>
 
-    <div class="book-selector">
-        <!-- Pre-Order Edition -->
+    <section class="book-selector">
         <div class="book-option">
-            <img src="images/innr-cover-final.jpg" alt="Pre-Order Edition">
+            <img src="images/innr-cover-final.jpg" alt="INNRBURIAL">
             <h3>Pre-Order</h3>
-            <div class="price">$34.99</div>
-            <p>Early access to the complete collection. Limited first edition.</p>
-            <a href="#" class="btn-order">Pre-Order Now</a>
+            <div class="price">50 ₾</div>
+            <p class="description">
+                A unified work exploring the recursive nature of reality through two interconnected parts: 
+                <strong>The Burial of Adam</strong> and <strong>Instruction to Reality</strong>.
+            </p>
+            <p>Limited first edition</p>
+            <p>Expected delivery: November 2025</p>
+            <p>Free shipping in Georgia</p>
+            <a href="contact.html" class="btn-order">Pre-Order Now</a>
         </div>
+    </section>
 
-        <!-- The Burial of Adam - Featured -->
-        <div class="book-option featured">
-            <img src="images/innr-cover-final.jpg" alt="The Burial of Adam">
-            <h3>The Burial of Adam</h3>
-            <div class="price">$39.99</div>
-            <p>The main work. A philosophical exploration of mortality and identity.</p>
-            <a href="book-burial.html" class="btn-order">Learn More</a>
-        </div>
-
-        <!-- Instruction to Reality -->
-        <div class="book-option">
-            <img src="images/innr-cover-final.jpg" alt="Instruction to Reality">
-            <h3>Instruction to Reality</h3>
-            <div class="price">$39.99</div>
-            <p>The science companion. Empirical perspectives on existence.</p>
-            <a href="book-instruction.html" class="btn-order">Learn More</a>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="gallery.html">Gallery</a>
-                <a href="book-order.html">Order</a>
-                <a href="contact.html">Contact</a>
-            </div>
-            <p class="footer-copy">© 2024 INNRBURIAL. All rights reserved.</p>
-        </div>
+    <footer>
+        <p>© 2025 INNRBURIAL. All rights reserved.</p>
     </footer>
 </body>
 </html>
