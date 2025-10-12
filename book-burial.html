@@ -133,6 +133,11 @@
             color: #fff;
             margin-bottom: 40px;
         }
+        .preview-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .preview-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -140,13 +145,20 @@
             margin-top: 60px;
         }
         .preview-item img {
+            object-fit: cover;
+            object-position: center;
             width: 100%;
             height: auto;
             border-radius: 8px;
         }
         @media (max-width: 1068px) {
             .book-cover-grid { grid-template-columns: 1fr; }
-            .preview-grid { grid-template-columns: 1fr; }
+            .preview-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-grid { grid-template-columns: 1fr; }
             .book-hero h1 { font-size: 56px; }
         }
     </style>
