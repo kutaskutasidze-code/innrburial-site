@@ -3,13 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pre-Order - INNRBURIAL</title>
+    <title>Order - INNRBURIAL</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-192.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-192.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=2">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .order-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: #fff;
+        }
+        
+        .order-card {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .book-cover {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0071e3;
+            margin: 20px 0;
+        }
+        
+        .delivery-info {
+            font-size: 16px;
+            color: #6e6e73;
+            margin-bottom: 40px;
+        }
+        
+        .paypal-container {
+            margin: 0 auto;
+            max-width: 400px;
+        }
+    </style>
 </head>
 <body>
     <nav class="nav-bar">
@@ -24,40 +79,24 @@
         </div>
     </nav>
 
-    <section class="order-hero">
-        <h1>INNRBURIAL</h1>
-        <p>Pre-Order Your Copy</p>
-    </section>
-
-    <section class="order-options">
-        <div class="container">
-            <div class="book-option">
-                <img src="images/innr-cover-final.jpg" alt="INNRBURIAL Book Cover">
-                <h2>INNRBURIAL</h2>
-                <p class="price">50 ₾</p>
-                <p class="delivery">Expected delivery: November 2025</p>
-                <p class="description">A philosophical exploration of mortality, identity, and existence. Available in two parts: The Burial of Adam and Instruction to Reality.</p>
-                
-                <div style="margin: 30px 0; display: flex; justify-content: center;">
-                    <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
-                    <div id="paypal-container-7G3RGPQZJWQ7G"></div>
-                    <script>
-                        paypal.HostedButtons({
-                            hostedButtonId: "7G3RGPQZJWQ7G",
-                        }).render("#paypal-container-7G3RGPQZJWQ7G")
-                    </script>
-                </div>
+    <div class="order-container">
+        <div class="order-card">
+            <img src="images/innr-cover-final.jpg" alt="INNRBURIAL Book" class="book-cover">
+            <h1>INNRBURIAL</h1>
+            <div class="price">$50</div>
+            <div class="delivery-info">Expected delivery: November 2025</div>
+            
+            <div class="paypal-container">
+                <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+                <div id="paypal-container-7G3RGPQZJWQ7G"></div>
+                <script>
+                    paypal.HostedButtons({
+                        hostedButtonId: "7G3RGPQZJWQ7G",
+                    }).render("#paypal-container-7G3RGPQZJWQ7G")
+                </script>
             </div>
         </div>
-    </section>
-
-    <footer>
-        <div class="footer-links">
-            <a href="book.html">Order</a>
-            <a href="contact.html">Contact</a>
-        </div>
-        <p>&copy; 2024 INNRBURIAL. All rights reserved.</p>
-    </footer>
+    </div>
 
     <script src="scroll-animations.js"></script>
 </body>
