@@ -1,0 +1,14 @@
+{
+    "name": "INNRBURIAL",
+    "short_name": "INNRBURIAL",
+    "icons": [
+        {
+            "src": "/images/favicon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
