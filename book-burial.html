@@ -134,6 +134,7 @@
             margin-bottom: 40px;
         }
         .preview-item {
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -147,6 +148,8 @@
         .preview-item img {
             object-fit: cover;
             object-position: center;
+            height: 100%;
+            max-height: 500px;
             width: 100%;
             height: auto;
             border-radius: 8px;
@@ -154,6 +157,7 @@
         @media (max-width: 1068px) {
             .book-cover-grid { grid-template-columns: 1fr; }
             .preview-item {
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
