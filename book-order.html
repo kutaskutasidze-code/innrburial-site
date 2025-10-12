@@ -1,126 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Order - INNRBURIAL</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-192.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-192.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=2">
     <link rel="manifest" href="/site.webmanifest">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pre-Order - INNRBURIAL</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            background: #fff;
-        }
-        .order-hero {
-            text-align: center;
-            padding: 100px 40px 80px;
-            background: #fff;
-        }
-        .order-hero h1 {
-            font-size: 72px;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            color: #1d1d1f;
-        }
-        .order-hero .subtitle {
-            font-size: 28px;
-            color: #86868b;
-            font-weight: 400;
-        }
-        
-        .book-selector {
-            max-width: 500px;
-            margin: 0 auto 120px;
-            padding: 0 40px;
-        }
-        
-        .book-option {
-            background: #f5f5f7;
-            border-radius: 18px;
-            padding: 40px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .book-option:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        .book-option img {
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-        .book-option h3 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #1d1d1f;
-        }
-        .book-option .price {
-            font-size: 28px;
-            font-weight: 600;
-            color: #0071e3;
-            margin-bottom: 20px;
-        }
-        .book-option p {
-            font-size: 17px;
-            color: #86868b;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-        .book-option .description {
-            font-size: 17px;
-            color: #1d1d1f;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        .btn-order {
-            display: inline-block;
-            padding: 12px 32px;
-            background: #0071e3;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 980px;
-            font-size: 17px;
-            font-weight: 600;
-            transition: background 0.3s, transform 0.3s;
-        }
-        .btn-order:hover {
-            background: #0077ed;
-            transform: scale(1.05);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 60px 40px;
-            background: #f5f5f7;
-            border-top: 1px solid #d2d2d7;
-        }
-        footer p {
-            font-size: 14px;
-            color: #86868b;
-        }
-        
-        @media (max-width: 768px) {
-            .order-hero h1 {
-                font-size: 48px;
-            }
-            .order-hero .subtitle {
-                font-size: 21px;
-            }
-            .book-option {
-                padding: 30px;
-            }
-            .book-option h3 {
-                font-size: 28px;
-            }
-        }
-    </style>
 </head>
 <body>
     <nav class="nav-bar">
@@ -129,59 +18,47 @@
             <div class="nav-menu">
                 <a href="book-burial.html">The Burial of Adam</a>
                 <a href="book-instruction.html">Instruction to Reality</a>
-                <a href="book-order.html">Order</a>
-                <a href="https://buy.stripe.com/test_4gMcN6aWA3rvgOg6cP3wQ00">Contact</a>
+                <a href="book.html">Order</a>
+                <a href="contact.html">Contact</a>
             </div>
         </div>
     </nav>
+
     <section class="order-hero">
         <h1>INNRBURIAL</h1>
-        <p class="subtitle">Reserve your copy today</p>
+        <p>Pre-Order Your Copy</p>
     </section>
 
-    <section class="book-selector">
-        <div class="book-option">
-            <img src="images/innr-cover-final.jpg" alt="INNRBURIAL">
-            <h3>Pre-Order</h3>
-            <div class="price">50 ₾</div>
-            <p class="description">
-                A unified work exploring the recursive nature of reality through two interconnected parts: 
-                <strong>The Burial of Adam</strong> and <strong>Instruction to Reality</strong>.
-            </p>
-            <p>Limited first edition</p>
-            <p>Expected delivery: November 2025</p>
-            <p>Free shipping in Georgia</p>
-            <a href="https://buy.stripe.com/test_4gMcN6aWA3rvgOg6cP3wQ00" class="btn-order">Pre-Order Now</a>
+    <section class="order-options">
+        <div class="container">
+            <div class="book-option">
+                <img src="images/innr-cover-final.jpg" alt="INNRBURIAL Book Cover">
+                <h2>INNRBURIAL</h2>
+                <p class="price">50 ₾</p>
+                <p class="delivery">Expected delivery: November 2025</p>
+                <p class="description">A philosophical exploration of mortality, identity, and existence. Available in two parts: The Burial of Adam and Instruction to Reality.</p>
+                
+                <div style="margin: 30px 0; display: flex; justify-content: center;">
+                    <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+                    <div id="paypal-container-7G3RGPQZJWQ7G"></div>
+                    <script>
+                        paypal.HostedButtons({
+                            hostedButtonId: "7G3RGPQZJWQ7G",
+                        }).render("#paypal-container-7G3RGPQZJWQ7G")
+                    </script>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2025 INNRBURIAL. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="book.html">Order</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <p>&copy; 2024 INNRBURIAL. All rights reserved.</p>
     </footer>
+
     <script src="scroll-animations.js"></script>
 </body>
 </html>
-
-    <!-- Contact Section -->
-    <section style="padding: 80px 0; background: #f5f5f7;">
-        <div style="max-width: 800px; margin: 0 auto; padding: 0 40px;">
-            <h2 style="font-size: 48px; font-weight: 600; text-align: center; margin-bottom: 16px;">Get in Touch</h2>
-            <p style="font-size: 21px; color: #86868b; text-align: center; margin-bottom: 60px;">Questions about your order? We're here to help.</p>
-            
-            <form style="background: #fff; padding: 40px; border-radius: 12px;">
-                <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-size: 17px; font-weight: 600; margin-bottom: 8px;">Name</label>
-                    <input type="text" placeholder="Your name" required style="width: 100%; padding: 12px; font-size: 17px; border: 1px solid #d2d2d7; border-radius: 8px;">
-                </div>
-                <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-size: 17px; font-weight: 600; margin-bottom: 8px;">Email</label>
-                    <input type="email" placeholder="your@email.com" required style="width: 100%; padding: 12px; font-size: 17px; border: 1px solid #d2d2d7; border-radius: 8px;">
-                </div>
-                <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-size: 17px; font-weight: 600; margin-bottom: 8px;">Message</label>
-                    <textarea rows="6" placeholder="Your message..." required style="width: 100%; padding: 12px; font-size: 17px; border: 1px solid #d2d2d7; border-radius: 8px; font-family: inherit;"></textarea>
-                </div>
-                <button type="submit" style="width: 100%; padding: 16px; background: #000; color: #fff; font-size: 17px; font-weight: 600; border: none; border-radius: 980px; cursor: pointer;">Send Message</button>
-            </form>
-        </div>
-    </section>
