@@ -426,3 +426,19 @@ body {
         font-size: 0.85rem;
     }
 }
+
+/* Better logo alignment */
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo img {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .nav-logo img {
+        height: 40px !important;
+    }
+}
