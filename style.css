@@ -442,3 +442,152 @@ body {
         height: 40px !important;
     }
 }
+
+/* Smooth Scroll Animations */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fade in on scroll */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Apply animations to sections */
+section, .book-section, .preview-section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Smooth image hover */
+img {
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+img:hover {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+}
+
+/* Smooth button transitions */
+button, .btn, a.btn, .variant-btn, .btn-order {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover, .btn:hover, a.btn:hover, .variant-btn:hover, .btn-order:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Nav smooth appear */
+.nav-bar {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Smooth card hover */
+.book-option, .preview-item {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.book-option:hover, .preview-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+/* Video smooth fade in */
+video {
+    animation: fadeIn 1s ease-out;
+    transition: opacity 0.5s ease;
+}
+
+/* Text smooth appear */
+h1, h2, h3 {
+    animation: fadeInUp 0.7s ease-out;
+}
+
+p {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Link smooth transitions */
+a {
+    transition: all 0.3s ease;
+}
+
+/* Smooth page transitions */
+body {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Hero section parallax effect */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-video, .hero-section video {
+    transition: transform 0.5s ease-out;
+}
+
+/* Stagger animations for multiple items */
+.preview-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.preview-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.preview-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Form inputs smooth focus */
+input, textarea, select {
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Smooth opacity on scroll */
+@media (prefers-reduced-motion: no-preference) {
+    [data-animate] {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    [data-animate].animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
