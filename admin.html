@@ -33,7 +33,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 20px 40px;
         }
         
         .section {
@@ -50,43 +50,46 @@
             color: #0071e3;
         }
         
-        .form-group {
-            margin-bottom: 20px;
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
         
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .form-group input[type="text"],
-        .form-group textarea,
-        .form-group input[type="file"] {
-            width: 100%;
-            padding: 12px;
+        .media-item {
             border: 1px solid #d2d2d7;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: inherit;
+            border-radius: 12px;
+            padding: 15px;
+            background: #fafafa;
         }
         
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
+        .media-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .media-name {
+            font-size: 14px;
+            margin-bottom: 10px;
+            word-break: break-all;
+            color: #666;
         }
         
         .btn {
             background: #0071e3;
             color: #fff;
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
+            margin-right: 8px;
         }
         
         .btn:hover {
@@ -101,24 +104,9 @@
             background: #ff453a;
         }
         
-        .media-preview {
-            max-width: 300px;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-        
-        .file-list {
-            margin-top: 10px;
-        }
-        
-        .file-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background: #f5f5f7;
-            border-radius: 8px;
-            margin-bottom: 8px;
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
         }
         
         .success-msg {
@@ -128,12 +116,6 @@
             border-radius: 8px;
             margin-bottom: 20px;
             display: none;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
         }
         
         .password-section {
@@ -150,6 +132,24 @@
             margin-right: 10px;
             border: 1px solid #d2d2d7;
             border-radius: 8px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .upload-label {
+            display: inline-block;
+            background: #0071e3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .upload-label:hover {
+            background: #0077ed;
         }
     </style>
 </head>
@@ -172,203 +172,147 @@
             <div class="success-msg" id="successMsg">Changes saved successfully!</div>
 
             <div class="section">
-                <h2>Main Page Content</h2>
-                <div class="form-group">
-                    <label>Main Title</label>
-                    <input type="text" id="mainTitle" value="INNRBURIAL" onchange="saveContent()">
-                </div>
-                <div class="form-group">
-                    <label>Subtitle</label>
-                    <input type="text" id="mainSubtitle" value="The Burial of Adam" onchange="saveContent()">
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Book Information</h2>
-                <div class="grid">
-                    <div class="form-group">
-                        <label>Book Price</label>
-                        <input type="text" id="bookPrice" value="50 ₾" onchange="saveContent()">
-                    </div>
-                    <div class="form-group">
-                        <label>Expected Delivery</label>
-                        <input type="text" id="deliveryDate" value="November 2025" onchange="saveContent()">
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Upload Media</h2>
-                <div class="grid">
-                    <div class="form-group">
-                        <label>Upload Images</label>
-                        <input type="file" id="imageUpload" accept="image/*" multiple onchange="uploadFiles('images')">
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Videos</label>
-                        <input type="file" id="videoUpload" accept="video/*" multiple onchange="uploadFiles('videos')">
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
                 <h2>Current Images</h2>
-                <div class="file-list" id="imagesList"></div>
+                <p style="margin-bottom: 15px; color: #666;">Click "Replace" to change any image</p>
+                <div class="media-grid" id="imagesGrid"></div>
             </div>
 
             <div class="section">
                 <h2>Current Videos</h2>
-                <div class="file-list" id="videosList"></div>
-            </div>
-
-            <div class="section">
-                <h2>Page Text Editor</h2>
-                <div class="form-group">
-                    <label>Select Page</label>
-                    <select id="pageSelector" onchange="loadPageContent()">
-                        <option value="index">Home Page</option>
-                        <option value="book-burial">The Burial of Adam</option>
-                        <option value="book-instruction">Instruction to Reality</option>
-                        <option value="book">Order Page</option>
-                        <option value="contact">Contact</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Edit Text Content</label>
-                    <textarea id="pageContent" rows="10"></textarea>
-                </div>
-                <button class="btn" onclick="savePageContent()">Save Page Changes</button>
+                <p style="margin-bottom: 15px; color: #666;">Click "Replace" to change any video</p>
+                <div class="media-grid" id="videosGrid"></div>
             </div>
         </div>
     </div>
 
     <script>
-        const ADMIN_PASSWORD = 'innrburial2025'; // Change this password!
+        const ADMIN_PASSWORD = 'innrburial2025';
         
         function checkPassword() {
             const password = document.getElementById('adminPassword').value;
             if (password === ADMIN_PASSWORD) {
                 document.getElementById('passwordSection').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
-                loadMediaFiles();
+                loadMedia();
             } else {
                 alert('Incorrect password!');
             }
         }
 
-        function saveContent() {
-            const content = {
-                mainTitle: document.getElementById('mainTitle').value,
-                mainSubtitle: document.getElementById('mainSubtitle').value,
-                bookPrice: document.getElementById('bookPrice').value,
-                deliveryDate: document.getElementById('deliveryDate').value
-            };
-            
-            localStorage.setItem('siteContent', JSON.stringify(content));
-            showSuccess();
+        async function loadMedia() {
+            await loadImages();
+            await loadVideos();
         }
 
-        async function uploadFiles(type) {
-            const input = type === 'images' ? document.getElementById('imageUpload') : document.getElementById('videoUpload');
-            const files = input.files;
+        async function loadImages() {
+            const grid = document.getElementById('imagesGrid');
+            grid.innerHTML = '<p>Loading images...</p>';
             
-            const formData = new FormData();
-            for (let file of files) {
-                formData.append('files', file);
+            try {
+                const response = await fetch('/api/list-images');
+                const images = await response.json();
+                
+                grid.innerHTML = '';
+                images.forEach(img => {
+                    const item = document.createElement('div');
+                    item.className = 'media-item';
+                    item.innerHTML = `
+                        <img src="/images/${img}" class="media-preview" alt="${img}">
+                        <div class="media-name">${img}</div>
+                        <input type="file" id="replace-img-${img}" accept="image/*" onchange="replaceFile('images', '${img}', this)" style="display: none;">
+                        <label for="replace-img-${img}" class="btn btn-small">Replace</label>
+                        <button class="btn btn-small btn-danger" onclick="deleteFile('images', '${img}')">Delete</button>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                grid.innerHTML = '<p>Could not load images. Files are in /images folder.</p>';
+                console.error('Error loading images:', error);
             }
+        }
+
+        async function loadVideos() {
+            const grid = document.getElementById('videosGrid');
+            grid.innerHTML = '<p>Loading videos...</p>';
+            
+            try {
+                const response = await fetch('/api/list-videos');
+                const videos = await response.json();
+                
+                grid.innerHTML = '';
+                videos.forEach(vid => {
+                    const item = document.createElement('div');
+                    item.className = 'media-item';
+                    item.innerHTML = `
+                        <video src="/videos/${vid}" class="media-preview" controls></video>
+                        <div class="media-name">${vid}</div>
+                        <input type="file" id="replace-vid-${vid}" accept="video/*" onchange="replaceFile('videos', '${vid}', this)" style="display: none;">
+                        <label for="replace-vid-${vid}" class="btn btn-small">Replace</label>
+                        <button class="btn btn-small btn-danger" onclick="deleteFile('videos', '${vid}')">Delete</button>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                grid.innerHTML = '<p>Could not load videos. Files are in /videos folder.</p>';
+                console.error('Error loading videos:', error);
+            }
+        }
+
+        async function replaceFile(type, oldFileName, input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
             formData.append('type', type);
+            formData.append('oldFileName', oldFileName);
 
             try {
-                const response = await fetch('/api/upload-media', {
+                const response = await fetch('/api/replace-media', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 if (response.ok) {
                     showSuccess();
-                    loadMediaFiles();
+                    loadMedia();
                 } else {
-                    alert('Upload failed!');
+                    alert('Replace failed! Make sure the file has the same name or update references.');
                 }
             } catch (error) {
-                console.error('Upload error:', error);
-                alert('Upload error. Files saved locally - deploy to apply changes.');
+                console.error('Replace error:', error);
+                
+                // Fallback: Save file locally for manual deployment
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const link = document.createElement('a');
+                    link.href = e.target.result;
+                    link.download = oldFileName;
+                    link.click();
+                    alert(`File downloaded as ${oldFileName}. Upload it to /${type}/ folder and redeploy.`);
+                };
+                reader.readAsDataURL(file);
             }
         }
 
-        async function loadMediaFiles() {
-            // Load images
-            try {
-                const images = await fetch('/api/list-media?type=images').then(r => r.json());
-                displayMediaList(images, 'imagesList', 'images');
-            } catch (e) {
-                console.error('Could not load images:', e);
-            }
-
-            // Load videos
-            try {
-                const videos = await fetch('/api/list-media?type=videos').then(r => r.json());
-                displayMediaList(videos, 'videosList', 'videos');
-            } catch (e) {
-                console.error('Could not load videos:', e);
-            }
-        }
-
-        function displayMediaList(files, containerId, type) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            
-            files.forEach(file => {
-                const item = document.createElement('div');
-                item.className = 'file-item';
-                item.innerHTML = `
-                    <span>${file}</span>
-                    <button class="btn btn-danger" onclick="deleteFile('${type}/${file}')">Delete</button>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        async function deleteFile(path) {
-            if (!confirm('Are you sure you want to delete this file?')) return;
+        async function deleteFile(type, fileName) {
+            if (!confirm(`Delete ${fileName}? This cannot be undone.`)) return;
             
             try {
-                await fetch('/api/delete-media', {
+                const response = await fetch('/api/delete-media', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ path })
+                    body: JSON.stringify({ type, fileName })
                 });
-                showSuccess();
-                loadMediaFiles();
-            } catch (error) {
-                alert('Delete failed!');
-            }
-        }
 
-        async function loadPageContent() {
-            const page = document.getElementById('pageSelector').value;
-            try {
-                const response = await fetch(`/${page}.html`);
-                const content = await response.text();
-                document.getElementById('pageContent').value = content;
+                if (response.ok) {
+                    showSuccess();
+                    loadMedia();
+                } else {
+                    alert('Delete failed!');
+                }
             } catch (error) {
-                alert('Could not load page content');
-            }
-        }
-
-        async function savePageContent() {
-            const page = document.getElementById('pageSelector').value;
-            const content = document.getElementById('pageContent').value;
-            
-            try {
-                await fetch('/api/save-page', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ page, content })
-                });
-                showSuccess();
-            } catch (error) {
-                alert('Save failed!');
+                alert('Delete error! Manually remove from /' + type + '/ folder.');
             }
         }
 
@@ -379,18 +323,6 @@
                 msg.style.display = 'none';
             }, 3000);
         }
-
-        // Load saved content on page load
-        window.onload = function() {
-            const saved = localStorage.getItem('siteContent');
-            if (saved) {
-                const content = JSON.parse(saved);
-                document.getElementById('mainTitle').value = content.mainTitle || 'INNRBURIAL';
-                document.getElementById('mainSubtitle').value = content.mainSubtitle || 'The Burial of Adam';
-                document.getElementById('bookPrice').value = content.bookPrice || '50 ₾';
-                document.getElementById('deliveryDate').value = content.deliveryDate || 'November 2025';
-            }
-        };
     </script>
 </body>
 </html>
