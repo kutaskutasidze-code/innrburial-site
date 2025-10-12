@@ -50,6 +50,26 @@
             color: #0071e3;
         }
         
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
         .media-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -137,20 +157,6 @@
         input[type="file"] {
             display: none;
         }
-        
-        .upload-label {
-            display: inline-block;
-            background: #0071e3;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .upload-label:hover {
-            background: #0077ed;
-        }
     </style>
 </head>
 <body>
@@ -170,6 +176,36 @@
 
         <div id="adminContent" style="display: none;">
             <div class="success-msg" id="successMsg">Changes saved successfully!</div>
+
+            <div class="section">
+                <h2>Contact Information</h2>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="contactEmail" value="cat@innrburial.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="contactPhone" value="">
+                </div>
+                <div class="form-group">
+                    <label>Instagram</label>
+                    <input type="text" id="contactInstagram" value="">
+                </div>
+                <button class="btn" onclick="saveContactInfo()">Save Contact Info</button>
+            </div>
+
+            <div class="section">
+                <h2>Book Information</h2>
+                <div class="form-group">
+                    <label>Book Price</label>
+                    <input type="text" id="bookPrice" value="50 ₾">
+                </div>
+                <div class="form-group">
+                    <label>Expected Delivery</label>
+                    <input type="text" id="deliveryDate" value="November 2025">
+                </div>
+                <button class="btn" onclick="saveBookInfo()">Save Book Info</button>
+            </div>
 
             <div class="section">
                 <h2>Current Images</h2>
@@ -194,8 +230,63 @@
                 document.getElementById('passwordSection').style.display = 'none';
                 document.getElementById('adminContent').style.display = 'block';
                 loadMedia();
+                loadSavedInfo();
             } else {
                 alert('Incorrect password!');
+            }
+        }
+
+        function loadSavedInfo() {
+            const contactInfo = localStorage.getItem('contactInfo');
+            if (contactInfo) {
+                const data = JSON.parse(contactInfo);
+                document.getElementById('contactEmail').value = data.email || 'cat@innrburial.com';
+                document.getElementById('contactPhone').value = data.phone || '';
+                document.getElementById('contactInstagram').value = data.instagram || '';
+            }
+
+            const bookInfo = localStorage.getItem('bookInfo');
+            if (bookInfo) {
+                const data = JSON.parse(bookInfo);
+                document.getElementById('bookPrice').value = data.price || '50 ₾';
+                document.getElementById('deliveryDate').value = data.delivery || 'November 2025';
+            }
+        }
+
+        function saveContactInfo() {
+            const data = {
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value,
+                instagram: document.getElementById('contactInstagram').value
+            };
+            localStorage.setItem('contactInfo', JSON.stringify(data));
+            
+            // Update contact page
+            updateContactPage(data);
+            showSuccess();
+        }
+
+        function saveBookInfo() {
+            const data = {
+                price: document.getElementById('bookPrice').value,
+                delivery: document.getElementById('deliveryDate').value
+            };
+            localStorage.setItem('bookInfo', JSON.stringify(data));
+            showSuccess();
+        }
+
+        async function updateContactPage(data) {
+            try {
+                const response = await fetch('/api/update-contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    console.log('Contact page updated');
+                }
+            } catch (error) {
+                console.error('Could not update contact page:', error);
             }
         }
 
@@ -219,15 +310,14 @@
                     item.innerHTML = `
                         <img src="/images/${img}" class="media-preview" alt="${img}">
                         <div class="media-name">${img}</div>
-                        <input type="file" id="replace-img-${img}" accept="image/*" onchange="replaceFile('images', '${img}', this)" style="display: none;">
+                        <input type="file" id="replace-img-${img}" accept="image/*" onchange="replaceFile('images', '${img}', this)">
                         <label for="replace-img-${img}" class="btn btn-small">Replace</label>
                         <button class="btn btn-small btn-danger" onclick="deleteFile('images', '${img}')">Delete</button>
                     `;
                     grid.appendChild(item);
                 });
             } catch (error) {
-                grid.innerHTML = '<p>Could not load images. Files are in /images folder.</p>';
-                console.error('Error loading images:', error);
+                grid.innerHTML = '<p>Could not load images.</p>';
             }
         }
 
@@ -246,15 +336,14 @@
                     item.innerHTML = `
                         <video src="/videos/${vid}" class="media-preview" controls></video>
                         <div class="media-name">${vid}</div>
-                        <input type="file" id="replace-vid-${vid}" accept="video/*" onchange="replaceFile('videos', '${vid}', this)" style="display: none;">
+                        <input type="file" id="replace-vid-${vid}" accept="video/*" onchange="replaceFile('videos', '${vid}', this)">
                         <label for="replace-vid-${vid}" class="btn btn-small">Replace</label>
                         <button class="btn btn-small btn-danger" onclick="deleteFile('videos', '${vid}')">Delete</button>
                     `;
                     grid.appendChild(item);
                 });
             } catch (error) {
-                grid.innerHTML = '<p>Could not load videos. Files are in /videos folder.</p>';
-                console.error('Error loading videos:', error);
+                grid.innerHTML = '<p>Could not load videos.</p>';
             }
         }
 
@@ -277,21 +366,10 @@
                     showSuccess();
                     loadMedia();
                 } else {
-                    alert('Replace failed! Make sure the file has the same name or update references.');
+                    alert('Replace failed!');
                 }
             } catch (error) {
-                console.error('Replace error:', error);
-                
-                // Fallback: Save file locally for manual deployment
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const link = document.createElement('a');
-                    link.href = e.target.result;
-                    link.download = oldFileName;
-                    link.click();
-                    alert(`File downloaded as ${oldFileName}. Upload it to /${type}/ folder and redeploy.`);
-                };
-                reader.readAsDataURL(file);
+                alert('Replace error! Upload manually to /' + type + '/ folder.');
             }
         }
 
@@ -312,7 +390,7 @@
                     alert('Delete failed!');
                 }
             } catch (error) {
-                alert('Delete error! Manually remove from /' + type + '/ folder.');
+                alert('Delete error!');
             }
         }
 
