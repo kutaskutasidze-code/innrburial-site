@@ -7,6 +7,7 @@
     "build": "echo 'No build step required'"
   },
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "nodemailer": "^6.9.7",
     "pg": "^8.11.3"
   }
