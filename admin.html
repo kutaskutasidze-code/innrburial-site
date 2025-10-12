@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control Panel - INNRBURIAL</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+        
+        .header {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #0071e3;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: #0071e3;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #0077ed;
+        }
+        
+        .btn-danger {
+            background: #ff3b30;
+        }
+        
+        .btn-danger:hover {
+            background: #ff453a;
+        }
+        
+        .media-preview {
+            max-width: 300px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+        
+        .file-list {
+            margin-top: 10px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .success-msg {
+            background: #34c759;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .password-section {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .password-section input {
+            width: 300px;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>INNRBURIAL Control Panel</h1>
+            <p>Manage your website content</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="password-section" id="passwordSection">
+            <h2>Enter Password to Access</h2>
+            <input type="password" id="adminPassword" placeholder="Enter admin password">
+            <button class="btn" onclick="checkPassword()">Login</button>
+        </div>
+
+        <div id="adminContent" style="display: none;">
+            <div class="success-msg" id="successMsg">Changes saved successfully!</div>
+
+            <div class="section">
+                <h2>Main Page Content</h2>
+                <div class="form-group">
+                    <label>Main Title</label>
+                    <input type="text" id="mainTitle" value="INNRBURIAL" onchange="saveContent()">
+                </div>
+                <div class="form-group">
+                    <label>Subtitle</label>
+                    <input type="text" id="mainSubtitle" value="The Burial of Adam" onchange="saveContent()">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Book Information</h2>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Book Price</label>
+                        <input type="text" id="bookPrice" value="50 ₾" onchange="saveContent()">
+                    </div>
+                    <div class="form-group">
+                        <label>Expected Delivery</label>
+                        <input type="text" id="deliveryDate" value="November 2025" onchange="saveContent()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Upload Media</h2>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Upload Images</label>
+                        <input type="file" id="imageUpload" accept="image/*" multiple onchange="uploadFiles('images')">
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Videos</label>
+                        <input type="file" id="videoUpload" accept="video/*" multiple onchange="uploadFiles('videos')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Current Images</h2>
+                <div class="file-list" id="imagesList"></div>
+            </div>
+
+            <div class="section">
+                <h2>Current Videos</h2>
+                <div class="file-list" id="videosList"></div>
+            </div>
+
+            <div class="section">
+                <h2>Page Text Editor</h2>
+                <div class="form-group">
+                    <label>Select Page</label>
+                    <select id="pageSelector" onchange="loadPageContent()">
+                        <option value="index">Home Page</option>
+                        <option value="book-burial">The Burial of Adam</option>
+                        <option value="book-instruction">Instruction to Reality</option>
+                        <option value="book">Order Page</option>
+                        <option value="contact">Contact</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Edit Text Content</label>
+                    <textarea id="pageContent" rows="10"></textarea>
+                </div>
+                <button class="btn" onclick="savePageContent()">Save Page Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = 'innrburial2025'; // Change this password!
+        
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                loadMediaFiles();
+            } else {
+                alert('Incorrect password!');
+            }
+        }
+
+        function saveContent() {
+            const content = {
+                mainTitle: document.getElementById('mainTitle').value,
+                mainSubtitle: document.getElementById('mainSubtitle').value,
+                bookPrice: document.getElementById('bookPrice').value,
+                deliveryDate: document.getElementById('deliveryDate').value
+            };
+            
+            localStorage.setItem('siteContent', JSON.stringify(content));
+            showSuccess();
+        }
+
+        async function uploadFiles(type) {
+            const input = type === 'images' ? document.getElementById('imageUpload') : document.getElementById('videoUpload');
+            const files = input.files;
+            
+            const formData = new FormData();
+            for (let file of files) {
+                formData.append('files', file);
+            }
+            formData.append('type', type);
+
+            try {
+                const response = await fetch('/api/upload-media', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    showSuccess();
+                    loadMediaFiles();
+                } else {
+                    alert('Upload failed!');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Upload error. Files saved locally - deploy to apply changes.');
+            }
+        }
+
+        async function loadMediaFiles() {
+            // Load images
+            try {
+                const images = await fetch('/api/list-media?type=images').then(r => r.json());
+                displayMediaList(images, 'imagesList', 'images');
+            } catch (e) {
+                console.error('Could not load images:', e);
+            }
+
+            // Load videos
+            try {
+                const videos = await fetch('/api/list-media?type=videos').then(r => r.json());
+                displayMediaList(videos, 'videosList', 'videos');
+            } catch (e) {
+                console.error('Could not load videos:', e);
+            }
+        }
+
+        function displayMediaList(files, containerId, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            files.forEach(file => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <span>${file}</span>
+                    <button class="btn btn-danger" onclick="deleteFile('${type}/${file}')">Delete</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        async function deleteFile(path) {
+            if (!confirm('Are you sure you want to delete this file?')) return;
+            
+            try {
+                await fetch('/api/delete-media', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path })
+                });
+                showSuccess();
+                loadMediaFiles();
+            } catch (error) {
+                alert('Delete failed!');
+            }
+        }
+
+        async function loadPageContent() {
+            const page = document.getElementById('pageSelector').value;
+            try {
+                const response = await fetch(`/${page}.html`);
+                const content = await response.text();
+                document.getElementById('pageContent').value = content;
+            } catch (error) {
+                alert('Could not load page content');
+            }
+        }
+
+        async function savePageContent() {
+            const page = document.getElementById('pageSelector').value;
+            const content = document.getElementById('pageContent').value;
+            
+            try {
+                await fetch('/api/save-page', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ page, content })
+                });
+                showSuccess();
+            } catch (error) {
+                alert('Save failed!');
+            }
+        }
+
+        function showSuccess() {
+            const msg = document.getElementById('successMsg');
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+        }
+
+        // Load saved content on page load
+        window.onload = function() {
+            const saved = localStorage.getItem('siteContent');
+            if (saved) {
+                const content = JSON.parse(saved);
+                document.getElementById('mainTitle').value = content.mainTitle || 'INNRBURIAL';
+                document.getElementById('mainSubtitle').value = content.mainSubtitle || 'The Burial of Adam';
+                document.getElementById('bookPrice').value = content.bookPrice || '50 ₾';
+                document.getElementById('deliveryDate').value = content.deliveryDate || 'November 2025';
+            }
+        };
+    </script>
+</body>
+</html>
