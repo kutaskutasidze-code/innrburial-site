@@ -1,34 +1,233 @@
-            cursor: not-allowed;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Order - INNRBURIAL</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-192.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-192.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=2">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .order-summary {
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             background: #fff;
-            border-radius: 18px;
-            padding: 32px;
-            position: sticky;
-            top: 80px;
+            color: #1d1d1f;
         }
-        .summary-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
+        
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1000;
         }
-        .summary-item {
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 15px;
+            align-items: center;
         }
-        .summary-total {
-            border-top: 1px solid #d2d2d7;
-            padding-top: 16px;
-            margin-top: 16px;
-            font-size: 21px;
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-logo img {
+            display: block;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            opacity: 0.6;
+        }
+        
+        .order-container {
+            max-width: 600px;
+            margin: 120px auto 80px;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 48px;
             font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
         }
-        @media (max-width: 1068px) {
-            .order-hero h1 { font-size: 56px; }
-            .form-section { padding: 32px 24px; }
-            .book-options { grid-template-columns: 1fr; }
+        
+        .subtitle {
+            font-size: 21px;
+            color: #6e6e73;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .book-info {
+            background: #f5f5f7;
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .book-info img {
+            max-width: 200px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .book-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .book-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0071e3;
+            margin-top: 16px;
+        }
+        
+        .delivery-info {
+            font-size: 14px;
+            color: #6e6e73;
+            margin-top: 8px;
+        }
+        
+        .form-section {
+            background: #fff;
+            border-radius: 18px;
+            border: 1px solid #d2d2d7;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .required {
+            color: #ff3b30;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            background: #0071e3;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background: #0077ed;
+        }
+        
+        .btn-submit:disabled {
+            background: #d2d2d7;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: #ff3b30;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 60px 40px;
+            color: #6e6e73;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-content {
+                gap: 0.5rem;
+                padding: 0.75rem 1rem;
+            }
+            
+            .nav-logo img {
+                height: 40px !important;
+            }
+            
+            .nav-menu {
+                gap: 0.5rem;
+            }
+            
+            .nav-menu a {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+            }
         }
     </style>
 </head>
@@ -37,200 +236,135 @@
         <div class="nav-content">
             <a href="index.html" class="nav-logo"><img src="/images/favicon-192.png" alt="INNRBURIAL" style="height: 45px; width: auto; display: block;"></a>
             <div class="nav-menu">
+                <a href="book-burial.html">The Burial of Adam</a>
+                <a href="book-instruction.html">Instruction to Reality</a>
                 <a href="book.html">Book</a>
                 <a href="contact.html">Contact</a>
             </div>
         </div>
     </nav>
 
-    <section class="order-hero">
-        <h1>Order Your Copy</h1>
-        <p class="order-hero-subtitle">Choose your edition and complete your order</p>
-    </section>
-
-    <section class="order-form-section">
-        <div class="order-container">
-            <form id="order-form">
-                <div class="form-section">
-                <!-- Book Cover Image -->
-                <div class="form-section" style="text-align: center; padding: 40px 24px;">
-                    <img src="images/innr-cover-final.jpg" alt="INNR Book Cover" style="max-width: 400px; width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-                </div>
-                
-                <div class="form-section" style="text-align: center; padding: 40px 24px;">
-                    <img src="images/innr-cover-final.jpg" alt="INNR Book Cover" style="max-width: 400px; width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-                </div>
-                
-                <div class="form-section">
-                    <h2>Select Your Book</h2>
-                    <div class="book-options">
-                        <div class="book-option" onclick="selectBook(this, 'The Burial of Adam', 'Available Now')">
-                            <div class="book-option-title">The Burial of Adam</div>
-                            <div class="book-option-price">Available Now</div>
-                        </div>
-                        <div class="book-option" onclick="selectBook(this, 'Instruction to Reality', 'Pre-order')">
-                            <div class="book-option-title">Instruction to Reality</div>
-                            <div class="book-option-price">Pre-order</div>
-                        </div>
-                        <div class="book-option" onclick="selectBook(this, 'Complete Collection', 'Pre-order')">
-                            <div class="book-option-title">Complete Collection</div>
-                            <div class="book-option-price">Pre-order - Both Books</div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="book-type" name="bookType" required>
-                </div>
-
-                <div class="form-section">
-                <div class="form-section" style="text-align: center; padding: 40px 24px;">
-                    <img src="images/innr-cover-final.jpg" alt="INNR Book Cover" style="max-width: 400px; width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-                </div>
-                
-                <div class="form-section">
-                    <h2>Your Information</h2>
-                    <div class="form-group">
-                        <label for="order-name">Full Name *</label>
-                        <input type="text" id="order-name" name="name" placeholder="John Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="order-email">Email Address *</label>
-                        <input type="email" id="order-email" name="email" placeholder="john@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="order-phone">Phone Number (Optional)</label>
-                        <input type="tel" id="order-phone" name="phone" placeholder="+1 (555) 123-4567">
-                    </div>
-                </div>
-
-                <div class="form-section">
-                <div class="form-section" style="text-align: center; padding: 40px 24px;">
-                    <img src="images/innr-cover-final.jpg" alt="INNR Book Cover" style="max-width: 400px; width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-                </div>
-                
-                <div class="form-section">
-                    <h2>Shipping Address</h2>
-                    <div class="form-group">
-                        <label for="order-address">Full Address *</label>
-                        <textarea id="order-address" name="address" rows="4" placeholder="123 Main Street&#10;Apt 4B&#10;New York, NY 10001&#10;United States" required></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="order-submit">Place Order</button>
-            </form>
+    <div class="order-container">
+        <h1>Pre-Order INNRBURIAL</h1>
+        <p class="subtitle">Complete your order details</p>
+        
+        <div class="book-info">
+            <img src="images/innr-cover-final.jpg" alt="INNRBURIAL Book Cover">
+            <div class="book-title">INNRBURIAL</div>
+            <div class="book-price">50 GEL</div>
+            <div class="delivery-info">Expected delivery: November 2025</div>
         </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="book.html">Book</a>
-                <a href="contact.html">Contact</a>
+        
+        <form id="orderForm">
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">City <span class="required">*</span></label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Street Address <span class="required">*</span></label>
+                    <textarea id="address" name="address" rows="2" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="floor">Floor <span class="required">*</span></label>
+                        <input type="text" id="floor" name="floor" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="flat">Flat Number <span class="required">*</span></label>
+                        <input type="text" id="flat" name="flat" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Additional Notes (Optional)</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Any special delivery instructions..."></textarea>
+                </div>
             </div>
-            <p class="footer-copy">© 2024 INNRBURIAL. All rights reserved.</p>
-        </div>
+            
+            <button type="submit" class="btn-submit" id="submitBtn">
+                Proceed to Payment
+            </button>
+            <div class="error-message" id="errorMessage"></div>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 INNRBURIAL. All rights reserved.</p>
     </footer>
 
     <script>
-        let selectedBookType = '';
+        const form = document.getElementById('orderForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
 
-        function selectBook(element, bookType, status) {
-            // Remove selected class from all options
-            document.querySelectorAll('.book-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            // Add selected class to clicked option
-            element.classList.add('selected');
-            
-            // Set hidden input value
-            selectedBookType = bookType;
-            document.getElementById('book-type').value = bookType;
-        }
-
-        // Form submission handler
-        document.getElementById('order-form').addEventListener('submit', async (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            if (!selectedBookType) {
-                showMessage('Please select a book to order', 'error');
-                return;
-            }
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
             
-            const submitBtn = document.querySelector('.order-submit');
-            const originalText = submitBtn.textContent;
-            
+            // Get form data
             const formData = {
-                name: document.getElementById('order-name').value,
-                email: document.getElementById('order-email').value,
-                bookType: document.getElementById('book-type').value,
-                address: document.getElementById('order-address').value,
-                phone: document.getElementById('order-phone').value || ''
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                city: document.getElementById('city').value,
+                address: document.getElementById('address').value,
+                floor: document.getElementById('floor').value,
+                flat: document.getElementById('flat').value,
+                notes: document.getElementById('notes').value,
+                price: 50,
+                currency: 'GEL',
+                timestamp: new Date().toISOString()
             };
             
-            submitBtn.textContent = 'Processing...';
-            submitBtn.disabled = true;
-            
             try {
-                const API_URL = 'http://localhost:3000/api'; // Update this with your deployed backend URL
-                
-                const response = await fetch(`${API_URL}/order`, {
+                // Save order to database
+                const response = await fetch('/api/create-order', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(formData)
                 });
                 
-                const data = await response.json();
-                
                 if (response.ok) {
-                    showMessage('Order placed successfully! Check your email for confirmation.', 'success');
-                    document.getElementById('order-form').reset();
-                    selectedBookType = '';
-                    document.querySelectorAll('.book-option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
+                    const data = await response.json();
+                    
+                    // Redirect to Stripe payment
+                    // REPLACE THIS URL with your actual Stripe Payment Link
+                    window.location.href = 'YOUR_STRIPE_PAYMENT_LINK_HERE';
                 } else {
-                    showMessage(data.error || 'Failed to place order. Please try again.', 'error');
+                    throw new Error('Failed to create order');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showMessage('Network error. Please check your connection and try again.', 'error');
-            } finally {
-                submitBtn.textContent = originalText;
+                errorMessage.textContent = 'Something went wrong. Please try again.';
+                errorMessage.style.display = 'block';
                 submitBtn.disabled = false;
+                submitBtn.textContent = 'Proceed to Payment';
             }
         });
-
-        function showMessage(text, type = 'success') {
-            const existing = document.querySelector('.form-message');
-            if (existing) existing.remove();
-            
-            const message = document.createElement('div');
-            message.className = `form-message ${type}`;
-            message.textContent = text;
-            
-            message.style.cssText = `
-                position: fixed;
-                top: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 16px 32px;
-                background: ${type === 'success' ? '#34c759' : '#ff3b30'};
-                color: white;
-                border-radius: 12px;
-                font-size: 15px;
-                font-weight: 500;
-                z-index: 10000;
-                animation: slideDown 0.3s ease;
-            `;
-            
-            document.body.appendChild(message);
-            
-            setTimeout(() => {
-                message.style.animation = 'slideUp 0.3s ease';
-                setTimeout(() => message.remove(), 300);
-            }, 5000);
-        }
     </script>
 </body>
 </html>
