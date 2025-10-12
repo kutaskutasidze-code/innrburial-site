@@ -385,3 +385,25 @@ body {
         scroll-behavior: smooth;
     }
 }
+/* Mobile navigation - shorter names */
+@media (max-width: 768px) {
+    .nav-menu a[href="book-instruction.html"]::before {
+        content: "Reality";
+    }
+    .nav-menu a[href="book-instruction.html"] {
+        font-size: 0;
+    }
+    .nav-menu a[href="book-instruction.html"]::before {
+        font-size: 0.95rem;
+    }
+    
+    .nav-menu a[href="book-burial.html"]::before {
+        content: "Burial";
+    }
+    .nav-menu a[href="book-burial.html"] {
+        font-size: 0;
+    }
+    .nav-menu a[href="book-burial.html"]::before {
+        font-size: 0.95rem;
+    }
+}
