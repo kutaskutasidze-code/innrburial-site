@@ -94,29 +94,6 @@
             border-radius: 18px;
         }
         
-        /* Animated Text Section */
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background: #fff;
-            overflow: hidden;
-        }
-            position: absolute;
-            white-space: nowrap;
-            font-size: 24px;
-            color: rgba(0,0,0,0.06);
-            font-family: 'BPG Nino Mtavruli', 'Sylfaen', serif;
-            font-weight: 300;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
-        }
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100%); }
-        }
-        
         .preview-section {
             padding: 120px 0;
             background: #000;
@@ -157,12 +134,12 @@
         @media (max-width: 1068px) {
             .book-cover-grid { grid-template-columns: 1fr; }
             .preview-item {
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .preview-grid { grid-template-columns: 1fr; }
+                min-height: 500px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .preview-grid { grid-template-columns: 1fr; }
             .book-hero h1 { font-size: 56px; }
         }
     </style>
@@ -171,11 +148,10 @@
     <nav class="nav-bar">
         <div class="nav-content">
             <a href="index.html" class="nav-logo"><img src="/images/favicon-192.png" alt="INNRBURIAL" style="height: 45px; width: auto; display: block;"></a>
-                        <div class="nav-menu">
+            <div class="nav-menu">
                 <a href="book-burial.html">The Burial of Adam</a>
                 <a href="book-instruction.html">Instruction to Reality</a>
                 <a href="book-order.html">Order</a>
-                <a href="contact.html">Contact</a>
             </div>
         </div>
     </nav>
@@ -215,13 +191,11 @@
 
     <section class="video-feature">
         <div class="video-container">
-            <video autoplay muted loop playsinline>
+            <video autoplay muted loop playsinline style="pointer-events: none;">
                 <source src="videos/fly-adam.mp4" type="video/mp4">
             </video>
         </div>
     </section>
-
-    <!-- NEW: Animated Text Section -->
 
     <section class="preview-section">
         <div class="preview-content">
@@ -238,55 +212,12 @@
         <div class="footer-content">
             <div class="footer-links">
                 <a href="book-order.html">Order</a>
-                <a href="contact.html">Contact</a>
+                <a href="https://instagram.com/innrburial" target="_blank" rel="noopener noreferrer">Instagram</a>
             </div>
-            <p class="footer-copy">© 2024 INNRBURIAL. All rights reserved.</p>
+            <p class="footer-copy">© 2025 INNRBURIAL. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        // Animated Text - Randomly selected and shuffled
-        const allTexts = [
-            'ვიწვი და ყველა გრძნობა სინანულით იწვის ჩემთან.',
-            'ვიწვი და ყველა ხსოვნა ტკივილით იფერფლება.',
-            'და გავიქეცი, მე არ მახსოვს სად.',
-            'მახსოვს ზმანება ცის, ფორთოხლისფერი ცის.',
-            'სიკვდილი აქერცლილი ჩემს თვალებს.',
-            'წვიმს ტუჩებს! ეჰ, ისევ მძიმედ წვიმს ტუჩებს!',
-            'ისე ვიწვი როგორც მელანქოლია!',
-            'ღამე იყო. ძირს ვეგდე, გაბრუებული ხაზით ჩემს ცაზე.',
-            'რადგან გოგო მიყვარს.',
-            'კიდევ ღამე.',
-            'გული ცემს და ქარი ცებს, ვიწვი მე და მუდამ თოვს.',
-            'ისევ ჩუმად მტკივა.',
-            'ფორთოხლისფერი მზიდან მომდინარი ცეცხლი.',
-            'კვეlaპერი მეზარება. მოწევა მეზარება კველაზე მეტად.',
-            'ცოტა წამოვიწიე. ღამე იყო, საკურასავით მოღუნული და ბლანტი.'
-        ];
-        
-        // Shuffle and select random texts
-        const shuffled = allTexts.sort(() => 0.5 - Math.random());
-        const selectedTexts = shuffled.slice(0, 12);
-        
-        const container = document.getElementById('animatedText');
-        const lineHeight = 60;
-        const numLines = Math.ceil(window.innerHeight / lineHeight);
-        
-        for (let i = 0; i < numLines; i++) {
-            const line = document.createElement('div');
-            line.textContent = selectedTexts[i % selectedTexts.length];
-            line.style.top = (i * lineHeight) + 'px';
-            
-            // Alternate direction
-            const isLeft = i % 2 === 0;
-            
-            // Vary speeds
-            const duration = 20 + (i % 5) * 7;
-            line.style.animationDuration = duration + 's';
-            
-            container.appendChild(line);
-        }
-    </script>
     <script src="scroll-animations.js"></script>
 </body>
 </html>
