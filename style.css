@@ -31,6 +31,27 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Hide video controls */
+video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+    display: none !important;
+}
+
+video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+video::-moz-media-controls {
+    display: none !important;
+}
+
 /* Navigation - Apple Style */
 .nav-bar {
     position: fixed;
@@ -322,6 +343,37 @@ body {
 
 .btn-primary:hover {
     background: #0077ed;
+}
+
+/* Instagram Link Styling */
+.social-links {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 24px;
+    transition: all 0.3s;
+}
+
+.instagram-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.instagram-link svg {
+    width: 20px;
+    height: 20px;
 }
 
 /* Footer */
