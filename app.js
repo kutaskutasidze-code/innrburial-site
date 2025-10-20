@@ -1,57 +1,8 @@
 // API Configuration
 const API_URL = '/api'; // Change this to your deployed backend URL
 
-// Contact Form Handler
+// Form Handlers
 document.addEventListener('DOMContentLoaded', () => {
-  const contactForm = document.querySelector('form');
-  
-  if (contactForm && window.location.pathname.includes('contact')) {
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const submitBtn = contactForm.querySelector('.form-submit');
-      const originalText = submitBtn.textContent;
-      
-      // Get form data
-      const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        subject: document.getElementById('subject').value,
-        message: document.getElementById('message').value
-      };
-      
-      // Show loading state
-      submitBtn.textContent = 'Sending...';
-      submitBtn.disabled = true;
-      
-      try {
-        const response = await fetch(`${API_URL}/contact`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          // Success
-          showMessage('Message sent successfully! We\'ll get back to you soon.', 'success');
-          contactForm.reset();
-        } else {
-          showMessage(data.error || 'Failed to send message. Please try again.', 'error');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        showMessage('Network error. Please check your connection and try again.', 'error');
-      } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }
-    });
-  }
-  
   // Book Order Form Handler
   const orderForm = document.getElementById('order-form');
   
