@@ -1,49 +1,49 @@
-// Force video autoplay on all devices
+// Ultra-aggressive video autoplay - eliminate ALL play buttons
 function forceVideoAutoplay() {
     const videos = document.querySelectorAll('video');
     
     videos.forEach(video => {
-        // Set attributes programmatically
+        // Set ALL attributes
         video.setAttribute('autoplay', '');
         video.setAttribute('muted', '');
         video.setAttribute('loop', '');
         video.setAttribute('playsinline', '');
         video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('preload', 'auto');
+        video.setAttribute('disablePictureInPicture', '');
         
-        // Remove controls
+        // Remove ALL controls
         video.removeAttribute('controls');
         video.controls = false;
+        video.disablePictureInPicture = true;
         
-        // Mute and play
+        // Mute completely
         video.muted = true;
         video.defaultMuted = true;
+        video.volume = 0;
         
-        // Force play
-        const playPromise = video.play();
+        // Hide controls via style
+        video.style.pointerEvents = 'none';
         
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                console.log('Video playing:', video.src);
-            }).catch(error => {
-                console.log('Autoplay prevented, trying again on user interaction:', error);
-                
-                // Retry on any user interaction
-                const playOnInteraction = () => {
-                    video.play().then(() => {
-                        console.log('Video playing after interaction');
-                    }).catch(e => console.log('Still failed:', e));
-                    
-                    // Remove listeners after successful play
-                    document.removeEventListener('touchstart', playOnInteraction);
-                    document.removeEventListener('click', playOnInteraction);
-                    document.removeEventListener('scroll', playOnInteraction);
-                };
-                
-                document.addEventListener('touchstart', playOnInteraction, { once: true });
-                document.addEventListener('click', playOnInteraction, { once: true });
-                document.addEventListener('scroll', playOnInteraction, { once: true });
-            });
-        }
+        // Force load
+        video.load();
+        
+        // Force play immediately
+        const playVideo = () => {
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('✓ Video playing:', video.src);
+                }).catch(error => {
+                    console.log('⚠ Autoplay prevented, retrying...', error);
+                    // Retry immediately
+                    setTimeout(() => video.play(), 100);
+                });
+            }
+        };
+        
+        playVideo();
     });
 }
 
@@ -61,15 +61,21 @@ const observer = new IntersectionObserver((entries) => {
             // Force play videos when they come into view
             const video = entry.target.querySelector('video');
             if (video) {
-                video.play().catch(e => console.log('Video play on scroll failed:', e));
+                video.muted = true;
+                video.play().catch(e => {
+                    console.log('Video play on scroll prevented, retrying...', e);
+                    setTimeout(() => video.play(), 100);
+                });
             }
         }
     });
 }, observerOptions);
 
-// Initialize everything when DOM is ready
+// Run autoplay IMMEDIATELY - before DOM loads
+forceVideoAutoplay();
+
+// Run again when DOM content loads
 document.addEventListener('DOMContentLoaded', () => {
-    // Force autoplay immediately
     forceVideoAutoplay();
     
     // Observe all elements with data-animate attribute
@@ -77,7 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     animatedElements.forEach(el => observer.observe(el));
     
     // Add data-animate to sections if not already present
-    const sections = document.querySelectorAll('section:not([data-animate])');\n    sections.forEach(section => {
+    const sections = document.querySelectorAll('section:not([data-animate])');
+    sections.forEach(section => {
         section.setAttribute('data-animate', '');
         observer.observe(section);
     });
@@ -91,16 +98,35 @@ document.addEventListener('DOMContentLoaded', () => {
             heroVideo.style.transform = `translate3d(0, ${rate}px, 0)`;
         });
     }
+    
+    // Force play again after 200ms
+    setTimeout(forceVideoAutoplay, 200);
 });
 
-// Also try to play videos when page becomes visible
+// Run on page visibility change
 document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
         forceVideoAutoplay();
     }
 });
 
-// Force play on page load (backup)
+// Run on page load (final backup)
 window.addEventListener('load', () => {
+    forceVideoAutoplay();
     setTimeout(forceVideoAutoplay, 100);
+    setTimeout(forceVideoAutoplay, 500);
+    setTimeout(forceVideoAutoplay, 1000);
+});
+
+// Force play on ANY user interaction
+const interactionEvents = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown', 'scroll'];
+let interactionTriggered = false;
+
+interactionEvents.forEach(eventType => {
+    document.addEventListener(eventType, () => {
+        if (!interactionTriggered) {
+            interactionTriggered = true;
+            forceVideoAutoplay();
+        }
+    }, { once: true, passive: true });
 });
