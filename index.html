@@ -10,6 +10,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INNRBURIAL</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Hide videos until they start playing */
+        video {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        video.playing {
+            opacity: 1 !important;
+        }
+        
+        /* Loading overlay for videos */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+        }
+        
+        .video-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 5;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
     <nav class="nav-bar">
@@ -25,7 +61,8 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <video autoplay muted loop playsinline preload="auto" class="hero-video" style="pointer-events: none;">
+        <div class="video-loading"></div>
+        <video autoplay muted loop playsinline preload="auto" class="hero-video" style="pointer-events: none;" x-webkit-airplay="deny">
             <source src="videos/fly-adam.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
@@ -71,8 +108,9 @@
 
     <!-- Video Section 2 -->
     <section class="showcase-section">
-        <div class="showcase-image">
-            <video autoplay muted loop playsinline preload="auto" style="pointer-events: none;">
+        <div class="showcase-image video-wrapper">
+            <div class="video-loading"></div>
+            <video autoplay muted loop playsinline preload="auto" style="pointer-events: none;" x-webkit-airplay="deny">
                 <source src="videos/video2.mp4" type="video/mp4">
             </video>
         </div>
@@ -128,8 +166,9 @@
 
     <!-- Video Section 3 -->
     <section class="showcase-section">
-        <div class="showcase-image">
-            <video autoplay muted loop playsinline preload="auto" style="pointer-events: none;">
+        <div class="showcase-image video-wrapper">
+            <div class="video-loading"></div>
+            <video autoplay muted loop playsinline preload="auto" style="pointer-events: none;" x-webkit-airplay="deny">
                 <source src="videos/toys.mp4" type="video/mp4">
                 <source src="videos/video3.mp4" type="video/mp4">
             </video>
