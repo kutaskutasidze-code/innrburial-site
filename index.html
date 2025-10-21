@@ -14,7 +14,7 @@
         /* Hide videos until they start playing */
         video {
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
         }
         
         video.playing {
@@ -38,12 +38,29 @@
             background: #fff;
             z-index: 5;
             opacity: 1;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .video-loading.hide {
             opacity: 0;
             pointer-events: none;
+        }
+        
+        /* Simple loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -61,8 +78,11 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="video-loading"></div>
-        <video muted loop playsinline preload="auto" class="hero-video" style="pointer-events: none;" x-webkit-airplay="deny">
+        <div class="video-loading">
+            <div class="spinner"></div>
+        </div>
+        <video muted loop playsinline preload="metadata" class="hero-video" style="pointer-events: none;" x-webkit-airplay="deny">
+            <source src="videos/fly-adam.webm" type="video/webm">
             <source src="videos/fly-adam.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
@@ -109,8 +129,11 @@
     <!-- Video Section 2 -->
     <section class="showcase-section">
         <div class="showcase-image video-wrapper">
-            <div class="video-loading"></div>
-            <video muted loop playsinline preload="auto" style="pointer-events: none;" x-webkit-airplay="deny">
+            <div class="video-loading">
+                <div class="spinner"></div>
+            </div>
+            <video muted loop playsinline preload="metadata" style="pointer-events: none;" x-webkit-airplay="deny">
+                <source src="videos/video2.webm" type="video/webm">
                 <source src="videos/video2.mp4" type="video/mp4">
             </video>
         </div>
@@ -167,10 +190,12 @@
     <!-- Video Section 3 -->
     <section class="showcase-section">
         <div class="showcase-image video-wrapper">
-            <div class="video-loading"></div>
-            <video muted loop playsinline preload="auto" style="pointer-events: none;" x-webkit-airplay="deny">
+            <div class="video-loading">
+                <div class="spinner"></div>
+            </div>
+            <video muted loop playsinline preload="metadata" style="pointer-events: none;" x-webkit-airplay="deny">
+                <source src="videos/toys.webm" type="video/webm">
                 <source src="videos/toys.mp4" type="video/mp4">
-                <source src="videos/video3.mp4" type="video/mp4">
             </video>
         </div>
     </section>
