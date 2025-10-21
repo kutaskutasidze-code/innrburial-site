@@ -31,24 +31,57 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide video controls */
+/* CRITICAL: Hide ALL video controls and play buttons */
+video {
+    pointer-events: none !important;
+}
+
 video::-webkit-media-controls {
     display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 video::-webkit-media-controls-enclosure {
     display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 video::-webkit-media-controls-panel {
     display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 video::-webkit-media-controls-play-button {
     display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 video::-moz-media-controls {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+video::--webkit-media-controls-overlay-enclosure {
+    display: none !important;
+}
+
+video::-internal-media-controls-overlay-cast-button {
     display: none !important;
 }
 
