@@ -1,83 +1,86 @@
-// Ultra-aggressive video autoplay - eliminate ALL play buttons
-function forceVideoAutoplay() {
-    const videos = document.querySelectorAll('video');
+// SOLUTION: Safari iOS shows play button when autoplay attribute is present
+// We remove autoplay from HTML and trigger play via JavaScript instead
+// This bypasses Safari's native play button overlay
+
+function initVideo(video) {
+    // Set all necessary attributes
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.loop = true;
+    video.playsInline = true;
+    video.controls = false;
+    video.disablePictureInPicture = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('x-webkit-airplay', 'deny');
     
-    videos.forEach(video => {
-        // Set ALL attributes
-        video.setAttribute('autoplay', '');
-        video.setAttribute('muted', '');
-        video.setAttribute('loop', '');
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        video.setAttribute('preload', 'auto');
-        video.setAttribute('disablePictureInPicture', '');
-        
-        // Remove ALL controls
-        video.removeAttribute('controls');
-        video.controls = false;
-        video.disablePictureInPicture = true;
-        
-        // Mute completely
-        video.muted = true;
-        video.defaultMuted = true;
-        video.volume = 0;
-        
-        // Hide controls via style
-        video.style.pointerEvents = 'none';
-        
-        // Force load
-        video.load();
-        
-        // Force play immediately
-        const playVideo = () => {
-            const playPromise = video.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log('✓ Video playing:', video.src);
-                }).catch(error => {
-                    console.log('⚠ Autoplay prevented, retrying...', error);
-                    // Retry immediately
-                    setTimeout(() => video.play(), 100);
-                });
+    // Force load
+    video.load();
+    
+    // Play immediately
+    const playPromise = video.play();
+    
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            // Video started playing
+            video.classList.add('playing');
+            // Hide loading overlay
+            const loadingOverlay = video.parentElement.querySelector('.video-loading');
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hide');
             }
-        };
-        
-        playVideo();
+        }).catch(error => {
+            // Autoplay was prevented
+            console.log('Autoplay prevented, will retry on interaction');
+        });
+    }
+}
+
+function initAllVideos() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        initVideo(video);
     });
 }
 
-// Smooth scroll reveal animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Initialize videos as early as possible
+initAllVideos();
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animated');
-            
-            // Force play videos when they come into view
-            const video = entry.target.querySelector('video');
-            if (video) {
-                video.muted = true;
-                video.play().catch(e => {
-                    console.log('Video play on scroll prevented, retrying...', e);
-                    setTimeout(() => video.play(), 100);
-                });
-            }
-        }
-    });
-}, observerOptions);
-
-// Run autoplay IMMEDIATELY - before DOM loads
-forceVideoAutoplay();
-
-// Run again when DOM content loads
+// Retry on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    forceVideoAutoplay();
+    initAllVideos();
     
+    // Smooth scroll reveal animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                
+                // Force play videos when they come into view
+                const video = entry.target.querySelector('video');
+                if (video) {
+                    video.muted = true;
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            video.classList.add('playing');
+                            const loadingOverlay = video.parentElement.querySelector('.video-loading');
+                            if (loadingOverlay) {
+                                loadingOverlay.classList.add('hide');
+                            }
+                        }).catch(e => console.log('Play on scroll prevented:', e));
+                    }
+                }
+            }
+        });
+    }, observerOptions);
+
     // Observe all elements with data-animate attribute
     const animatedElements = document.querySelectorAll('[data-animate]');
     animatedElements.forEach(el => observer.observe(el));
@@ -98,35 +101,29 @@ document.addEventListener('DOMContentLoaded', () => {
             heroVideo.style.transform = `translate3d(0, ${rate}px, 0)`;
         });
     }
-    
-    // Force play again after 200ms
-    setTimeout(forceVideoAutoplay, 200);
 });
 
-// Run on page visibility change
+// Retry on page load
+window.addEventListener('load', () => {
+    initAllVideos();
+});
+
+// Retry on visibility change
 document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
-        forceVideoAutoplay();
+        initAllVideos();
     }
 });
 
-// Run on page load (final backup)
-window.addEventListener('load', () => {
-    forceVideoAutoplay();
-    setTimeout(forceVideoAutoplay, 100);
-    setTimeout(forceVideoAutoplay, 500);
-    setTimeout(forceVideoAutoplay, 1000);
-});
-
-// Force play on ANY user interaction
-const interactionEvents = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown', 'scroll'];
-let interactionTriggered = false;
+// Retry on ANY user interaction (for Safari Low Power Mode)
+const interactionEvents = ['click', 'touchstart', 'touchend', 'scroll'];
+let hasInteracted = false;
 
 interactionEvents.forEach(eventType => {
     document.addEventListener(eventType, () => {
-        if (!interactionTriggered) {
-            interactionTriggered = true;
-            forceVideoAutoplay();
+        if (!hasInteracted) {
+            hasInteracted = true;
+            initAllVideos();
         }
     }, { once: true, passive: true });
 });
