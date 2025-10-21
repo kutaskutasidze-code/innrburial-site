@@ -1,7 +1,4 @@
-/* Import Balenciaga-inspired font */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
-
-/* Apple-Inspired Design System with Balenciaga Typography */
+/* Apple-Inspired Design System */
 :root {
     --color-bg: #ffffff;
     --color-text: #1d1d1f;
@@ -23,13 +20,13 @@ html {
 }
 
 body {
-    font-family: 'Oswald', 'Univers', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
     background: var(--color-bg);
     color: var(--color-text);
     font-size: 17px;
     line-height: 1.47059;
     font-weight: 400;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.022em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -55,7 +52,7 @@ video::-moz-media-controls {
     display: none !important;
 }
 
-/* Navigation - Balenciaga Style */
+/* Navigation */
 .nav-bar {
     position: fixed;
     top: 0;
@@ -79,12 +76,11 @@ video::-moz-media-controls {
 
 .nav-logo {
     font-size: 21px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    letter-spacing: -0.005em;
     color: var(--color-text);
     text-decoration: none;
     margin-right: auto;
-    text-transform: uppercase;
 }
 
 .nav-menu {
@@ -94,13 +90,11 @@ video::-moz-media-controls {
 
 .nav-menu a {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--color-text);
     text-decoration: none;
     opacity: 0.8;
     transition: opacity 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
 }
 
 .nav-menu a:hover {
@@ -140,20 +134,18 @@ video::-moz-media-controls {
 
 .hero-headline {
     font-size: 96px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-weight: 600;
+    letter-spacing: -0.015em;
     line-height: 1.05;
     margin-bottom: 20px;
-    text-transform: uppercase;
 }
 
 .hero-tagline {
     font-size: 28px;
     font-weight: 400;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.007em;
     line-height: 1.381;
     opacity: 0.7;
-    text-transform: uppercase;
 }
 
 /* Feature Sections */
@@ -175,17 +167,16 @@ video::-moz-media-controls {
 
 .section-headline {
     font-size: 64px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-weight: 600;
+    letter-spacing: -0.009em;
     line-height: 1.0625;
     margin-bottom: 16px;
-    text-transform: uppercase;
 }
 
 .section-description {
     font-size: 28px;
     font-weight: 400;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.007em;
     line-height: 1.14286;
     color: var(--color-text-secondary);
     margin-bottom: 24px;
@@ -193,13 +184,12 @@ video::-moz-media-controls {
 
 .cta-link {
     font-size: 21px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
+    font-weight: 400;
+    letter-spacing: 0.011em;
     color: #0071e3;
     text-decoration: none;
     display: inline-block;
     transition: color 0.3s;
-    text-transform: uppercase;
 }
 
 .cta-link:hover {
@@ -283,20 +273,18 @@ video::-moz-media-controls {
 
 .book-title {
     font-size: 48px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-weight: 600;
+    letter-spacing: -0.003em;
     line-height: 1.08349;
     margin-bottom: 8px;
-    text-transform: uppercase;
 }
 
 .book-subtitle {
     font-size: 21px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
+    font-weight: 400;
+    letter-spacing: 0.011em;
     color: #86868b;
     margin-bottom: 24px;
-    text-transform: uppercase;
 }
 
 .book-desc {
@@ -319,14 +307,12 @@ video::-moz-media-controls {
     background: #f5f5f7;
     color: #000;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     border-radius: 12px;
     border: 1px solid #e5e5e5;
     transition: all 0.3s;
     text-align: left;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
 }
 
 .variant-btn:hover {
@@ -340,7 +326,6 @@ video::-moz-media-controls {
     font-size: 12px;
     opacity: 0.7;
     margin-top: 4px;
-    text-transform: none;
 }
 
 .btn-primary {
@@ -349,12 +334,11 @@ video::-moz-media-controls {
     background: #0071e3;
     color: #fff;
     font-size: 17px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-weight: 400;
+    letter-spacing: -0.022em;
     text-decoration: none;
     border-radius: 980px;
     transition: background 0.3s;
-    text-transform: uppercase;
 }
 
 .btn-primary:hover {
@@ -376,12 +360,10 @@ video::-moz-media-controls {
     background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
     color: #fff;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     border-radius: 24px;
     transition: all 0.3s;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
 }
 
 .instagram-link:hover {
@@ -420,8 +402,6 @@ video::-moz-media-controls {
     color: var(--color-text-secondary);
     text-decoration: none;
     transition: color 0.3s;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
 }
 
 .footer-links a:hover {
