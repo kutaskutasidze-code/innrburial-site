@@ -74,7 +74,7 @@
             muted 
             loop 
             playsinline 
-            preload="none" 
+            preload="auto" 
             class="hero-video"
             x-webkit-airplay="deny"
             aria-label="Hero video background">
@@ -177,7 +177,7 @@
                 muted 
                 loop 
                 playsinline 
-                preload="none"
+                preload="metadata"
                 x-webkit-airplay="deny"
                 data-autoplay-on-scroll
                 aria-label="Toy Tina video">
@@ -203,7 +203,7 @@
                 muted 
                 loop 
                 playsinline 
-                preload="none"
+                preload="metadata"
                 x-webkit-airplay="deny"
                 data-autoplay-on-scroll
                 aria-label="Georgian street video">
