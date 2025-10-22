@@ -180,8 +180,10 @@
             margin-bottom: 16px;
         }
         
-        #paypal-button-container {
+        .paypal-container {
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
         }
         
         .btn-submit {
@@ -223,6 +225,20 @@
         
         .hidden {
             display: none;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #0071e3;
+            padding: 16px;
+            margin-top: 16px;
+            border-radius: 8px;
+        }
+        
+        .info-box p {
+            font-size: 14px;
+            color: #1d1d1f;
+            margin: 4px 0;
         }
         
         footer {
@@ -339,8 +355,21 @@
         <!-- PayPal Payment Section (Hidden initially) -->
         <div id="paymentSection" class="payment-section hidden">
             <h3>Complete Payment</h3>
-            <p style="margin-bottom: 20px; color: #6e6e73;">Your order has been saved. Complete payment below:</p>
-            <div id="paypal-button-container"></div>
+            <p style="margin-bottom: 20px; color: #6e6e73;">Your order has been saved. Complete payment with PayPal:</p>
+            
+            <div class="info-box" id="orderInfo">
+                <!-- Order details will be inserted here -->
+            </div>
+            
+            <div class="paypal-container">
+                <!-- PayPal Hosted Button -->
+                <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+                <div id="paypal-container-7G3RGPQZJWQ7G"></div>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 14px; color: #6e6e73;">
+                After completing payment, you'll receive a confirmation email.
+            </p>
         </div>
     </div>
 
@@ -348,15 +377,13 @@
         <p>&copy; 2024 INNRBURIAL. All rights reserved.</p>
     </footer>
 
-    <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&currency=USD"></script>
-
     <script>
         const form = document.getElementById('orderForm');
         const submitBtn = document.getElementById('submitBtn');
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
         const paymentSection = document.getElementById('paymentSection');
+        const orderInfo = document.getElementById('orderInfo');
         let savedOrderId = null;
 
         form.addEventListener('submit', async (e) => {
@@ -365,6 +392,7 @@
             // Disable button
             submitBtn.disabled = true;
             submitBtn.textContent = 'Processing...';
+            errorMessage.style.display = 'none';
             
             // Get form data
             const formData = {
@@ -391,9 +419,19 @@
                     body: JSON.stringify(formData)
                 });
                 
-                if (response.ok) {
-                    const data = await response.json();
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
                     savedOrderId = data.orderId;
+                    
+                    // Show order info
+                    orderInfo.innerHTML = `
+                        <p><strong>Order #${savedOrderId}</strong></p>
+                        <p>${formData.name}</p>
+                        <p>${formData.email}</p>
+                        <p>${formData.address}, Floor ${formData.floor}, Flat ${formData.flat}</p>
+                        <p>${formData.city}</p>
+                    `;
                     
                     // Show success message
                     successMessage.textContent = 'Order details saved! Please complete payment below.';
@@ -403,68 +441,26 @@
                     form.classList.add('hidden');
                     paymentSection.classList.remove('hidden');
                     
-                    // Initialize PayPal button
-                    initPayPal(formData);
+                    // Initialize PayPal Hosted Button
+                    paypal.HostedButtons({
+                        hostedButtonId: "7G3RGPQZJWQ7G",
+                    }).render("#paypal-container-7G3RGPQZJWQ7G");
+                    
+                    // Store order ID in localStorage for reference
+                    localStorage.setItem('innrburial_order_id', savedOrderId);
+                    localStorage.setItem('innrburial_order_email', formData.email);
+                    
                 } else {
-                    throw new Error('Failed to create order');
+                    throw new Error(data.error || 'Failed to create order');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                errorMessage.textContent = 'Something went wrong. Please try again.';
+                errorMessage.textContent = 'Something went wrong: ' + error.message + '. Please try again.';
                 errorMessage.style.display = 'block';
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Continue to Payment';
             }
         });
-
-        function initPayPal(orderData) {
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: '15.00',
-                                currency_code: 'USD'
-                            },
-                            description: 'INNRBURIAL Book Pre-Order',
-                            custom_id: savedOrderId ? savedOrderId.toString() : ''
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(async function(details) {
-                        // Update order with payment info
-                        try {
-                            await fetch('/api/update-payment', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    orderId: savedOrderId,
-                                    paypalOrderId: data.orderID,
-                                    paypalPayerId: data.payerID,
-                                    paymentStatus: 'completed',
-                                    status: 'paid'
-                                })
-                            });
-
-                            // Show success and redirect
-                            alert('Payment successful! Thank you for your order. You will receive a confirmation email shortly.');
-                            window.location.href = 'index.html';
-                        } catch (error) {
-                            console.error('Error updating payment:', error);
-                            alert('Payment completed but there was an error updating your order. Please contact support with order ID: ' + savedOrderId);
-                        }
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal error:', err);
-                    errorMessage.textContent = 'Payment failed. Please try again or contact support.';
-                    errorMessage.style.display = 'block';
-                }
-            }).render('#paypal-button-container');
-        }
     </script>
     <script src="scroll-animations.js"></script>
 </body>
