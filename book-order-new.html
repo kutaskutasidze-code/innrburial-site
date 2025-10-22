@@ -184,6 +184,7 @@
             margin-top: 20px;
             display: flex;
             justify-content: center;
+            min-height: 150px;
         }
         
         .btn-submit {
@@ -354,21 +355,20 @@
 
         <!-- PayPal Payment Section (Hidden initially) -->
         <div id="paymentSection" class="payment-section hidden">
-            <h3>Complete Payment</h3>
-            <p style="margin-bottom: 20px; color: #6e6e73;">Your order has been saved. Complete payment with PayPal:</p>
+            <h3>Complete Payment with PayPal</h3>
+            <p style="margin-bottom: 20px; color: #6e6e73;">Your order has been saved. Click the PayPal button below to complete payment:</p>
             
             <div class="info-box" id="orderInfo">
                 <!-- Order details will be inserted here -->
             </div>
             
             <div class="paypal-container">
-                <!-- PayPal Hosted Button -->
-                <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+                <!-- PayPal Button Container -->
                 <div id="paypal-container-7G3RGPQZJWQ7G"></div>
             </div>
             
             <p style="margin-top: 20px; font-size: 14px; color: #6e6e73;">
-                After completing payment, you'll receive a confirmation email.
+                After payment, you'll receive a confirmation email at the address you provided.
             </p>
         </div>
     </div>
@@ -376,6 +376,9 @@
     <footer>
         <p>&copy; 2024 INNRBURIAL. All rights reserved.</p>
     </footer>
+
+    <!-- PayPal SDK - Load this BEFORE trying to render the button -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 
     <script>
         const form = document.getElementById('orderForm');
@@ -385,13 +388,14 @@
         const paymentSection = document.getElementById('paymentSection');
         const orderInfo = document.getElementById('orderInfo');
         let savedOrderId = null;
+        let paypalRendered = false;
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             // Disable button
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Processing...';
+            submitBtn.textContent = 'Saving order...';
             errorMessage.style.display = 'none';
             
             // Get form data
@@ -427,24 +431,25 @@
                     // Show order info
                     orderInfo.innerHTML = `
                         <p><strong>Order #${savedOrderId}</strong></p>
-                        <p>${formData.name}</p>
-                        <p>${formData.email}</p>
-                        <p>${formData.address}, Floor ${formData.floor}, Flat ${formData.flat}</p>
-                        <p>${formData.city}</p>
+                        <p><strong>Name:</strong> ${formData.name}</p>
+                        <p><strong>Email:</strong> ${formData.email}</p>
+                        <p><strong>Delivery:</strong> ${formData.address}, Floor ${formData.floor}, Flat ${formData.flat}, ${formData.city}</p>
+                        <p><strong>Amount:</strong> $15 USD</p>
                     `;
                     
                     // Show success message
-                    successMessage.textContent = 'Order details saved! Please complete payment below.';
+                    successMessage.textContent = '✓ Order saved! Please complete payment below.';
                     successMessage.style.display = 'block';
                     
                     // Hide form and show PayPal payment
                     form.classList.add('hidden');
                     paymentSection.classList.remove('hidden');
                     
-                    // Initialize PayPal Hosted Button
-                    paypal.HostedButtons({
-                        hostedButtonId: "7G3RGPQZJWQ7G",
-                    }).render("#paypal-container-7G3RGPQZJWQ7G");
+                    // Render PayPal button (only once)
+                    if (!paypalRendered) {
+                        renderPayPalButton();
+                        paypalRendered = true;
+                    }
                     
                     // Store order ID in localStorage for reference
                     localStorage.setItem('innrburial_order_id', savedOrderId);
@@ -455,12 +460,24 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                errorMessage.textContent = 'Something went wrong: ' + error.message + '. Please try again.';
+                errorMessage.textContent = 'Error: ' + error.message + '. Please try again.';
                 errorMessage.style.display = 'block';
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Continue to Payment';
             }
         });
+
+        function renderPayPalButton() {
+            try {
+                paypal.HostedButtons({
+                    hostedButtonId: "7G3RGPQZJWQ7G",
+                }).render("#paypal-container-7G3RGPQZJWQ7G");
+            } catch (error) {
+                console.error('PayPal render error:', error);
+                errorMessage.textContent = 'Error loading PayPal button. Please refresh the page and try again.';
+                errorMessage.style.display = 'block';
+            }
+        }
     </script>
     <script src="scroll-animations.js"></script>
 </body>
