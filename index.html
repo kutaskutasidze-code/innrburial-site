@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INNRBURIAL</title>
     
-    <!-- Performance: DNS Prefetch for external resources -->
+    <!-- Performance: DNS Prefetch -->
     <link rel="dns-prefetch" href="https://instagram.com">
     
     <!-- Favicon -->
@@ -15,75 +15,34 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=2">
     <link rel="manifest" href="/site.webmanifest">
     
-    <!-- Preload critical resources -->
+    <!-- Preload hero video for instant playback (Dior/AirBnB technique) -->
     <link rel="preload" href="videos/fly-adam.mp4" as="video" type="video/mp4">
-    <link rel="preload" href="style.css?v=5" as="style">
-    <link rel="preload" href="scroll-animations.js?v=5" as="script">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
     
-    <!-- Critical CSS inline for faster initial paint -->
+    <!-- Critical CSS inline -->
     <style>
-        /* Critical above-the-fold styles */
         body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         .nav-bar { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
-        .hero-section { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .hero-section { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; }
         
-        /* Hide videos until they start playing */
+        /* Videos load instantly like Dior/AirBnB - no loading spinners */
         video {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            will-change: opacity;
-        }
-        
-        video.playing {
-            opacity: 1 !important;
-        }
-        
-        /* Loading overlay for videos */
-        .video-wrapper {
-            position: relative;
             width: 100%;
             height: 100%;
-            background: #fff;
+            object-fit: cover;
+            opacity: 1;
+            display: block;
         }
         
-        .video-loading {
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            z-index: 5;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
-        .video-loading.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        /* Simple loading spinner */
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(0,0,0,0.1);
-            border-top-color: #000;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Lazy load images optimization */
+        /* Lazy load images */
         img[loading="lazy"] {
             opacity: 0;
             transition: opacity 0.3s;
@@ -98,7 +57,7 @@
     <nav class="nav-bar">
         <div class="nav-content">
             <a href="index.html" class="nav-logo">
-                <img src="/images/favicon-192.png" alt="INNRBURIAL" width="45" height="45" style="display: block;">
+                <img src="/images/favicon-192.png" alt="INNRBURIAL" width="45" height="45">
             </a>
             <div class="nav-menu">
                 <a href="book-burial.html">The Burial of Adam</a>
@@ -108,12 +67,17 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with instant video playback -->
     <section class="hero-section">
-        <div class="video-loading">
-            <div class="spinner"></div>
-        </div>
-        <video muted loop playsinline preload="auto" class="hero-video" style="pointer-events: none;" x-webkit-airplay="deny" aria-label="Hero video background">
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            preload="auto" 
+            class="hero-video"
+            x-webkit-airplay="deny"
+            aria-label="Hero video background">
             <source src="videos/fly-adam.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
@@ -207,11 +171,16 @@
 
     <!-- Toy Tina Video Section -->
     <section class="showcase-section">
-        <div class="showcase-image video-wrapper">
-            <div class="video-loading">
-                <div class="spinner"></div>
-            </div>
-            <video muted loop playsinline preload="metadata" style="pointer-events: none;" x-webkit-airplay="deny" aria-label="Toy Tina video">
+        <div class="showcase-image">
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                preload="metadata"
+                x-webkit-airplay="deny"
+                data-autoplay-on-scroll
+                aria-label="Toy Tina video">
                 <source src="videos/toy-tina.mp4" type="video/mp4">
             </video>
         </div>
@@ -228,11 +197,16 @@
 
     <!-- Georgian Street Video Section -->
     <section class="showcase-section">
-        <div class="showcase-image video-wrapper">
-            <div class="video-loading">
-                <div class="spinner"></div>
-            </div>
-            <video muted loop playsinline preload="metadata" style="pointer-events: none;" x-webkit-airplay="deny" aria-label="Georgian street video">
+        <div class="showcase-image">
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                preload="metadata"
+                x-webkit-airplay="deny"
+                data-autoplay-on-scroll
+                aria-label="Georgian street video">
                 <source src="videos/georgian-street.mp4" type="video/mp4">
             </video>
         </div>
@@ -249,8 +223,41 @@
         </div>
     </footer>
     
-    <!-- Load JavaScript deferred for better performance -->
-    <script src="scroll-animations.js?v=5" defer></script>
+    <!-- Minimal JavaScript for video autoplay on scroll -->
+    <script>
+    // Instant video loading like Dior/AirBnB - minimal JavaScript
+    (function() {
+        'use strict';
+        
+        // Lazy load videos when they enter viewport
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    if (video.paused) {
+                        video.play().catch(() => {});
+                    }
+                    videoObserver.unobserve(video);
+                }
+            });
+        }, { threshold: 0.25 });
+        
+        // Observe all videos with data-autoplay-on-scroll
+        document.querySelectorAll('video[data-autoplay-on-scroll]').forEach(video => {
+            videoObserver.observe(video);
+        });
+        
+        // Lazy load images
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            } else {
+                img.addEventListener('load', () => img.classList.add('loaded'));
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
-<!-- Performance optimized: Oct 22 2025 -->
+<!-- Optimized for instant video playback like Dior/AirBnB -->
