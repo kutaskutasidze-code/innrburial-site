@@ -166,6 +166,24 @@
             color: #ff3b30;
         }
         
+        .payment-section {
+            background: #f5f5f7;
+            border-radius: 18px;
+            padding: 32px;
+            margin-top: 24px;
+            text-align: center;
+        }
+        
+        .payment-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        #paypal-button-container {
+            margin-top: 20px;
+        }
+        
         .btn-submit {
             width: 100%;
             padding: 16px;
@@ -177,6 +195,7 @@
             border-radius: 12px;
             cursor: pointer;
             transition: background 0.3s;
+            margin-bottom: 16px;
         }
         
         .btn-submit:hover {
@@ -192,6 +211,17 @@
             color: #ff3b30;
             font-size: 14px;
             margin-top: 8px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #34c759;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        .hidden {
             display: none;
         }
         
@@ -250,7 +280,7 @@
         <div class="book-info">
             <img src="images/innr-cover-final.jpg" alt="INNRBURIAL Book Cover">
             <div class="book-title">INNRBURIAL</div>
-            <div class="book-price">15 GEL</div>
+            <div class="book-price">$15 USD</div>
             <div class="delivery-info">Expected delivery: November 2025</div>
         </div>
         
@@ -300,20 +330,34 @@
             </div>
             
             <button type="submit" class="btn-submit" id="submitBtn">
-                Proceed to Payment
+                Continue to Payment
             </button>
             <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
         </form>
+
+        <!-- PayPal Payment Section (Hidden initially) -->
+        <div id="paymentSection" class="payment-section hidden">
+            <h3>Complete Payment</h3>
+            <p style="margin-bottom: 20px; color: #6e6e73;">Your order has been saved. Complete payment below:</p>
+            <div id="paypal-button-container"></div>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2024 INNRBURIAL. All rights reserved.</p>
     </footer>
 
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAATntTM8pFdOP-6zGu50npjIdvKtEu6SVagJ7pTg5QyWZu7vjpLQoEc0EsW5bko3IrITtdxgaopj9y9rA&currency=USD"></script>
+
     <script>
         const form = document.getElementById('orderForm');
         const submitBtn = document.getElementById('submitBtn');
         const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const paymentSection = document.getElementById('paymentSection');
+        let savedOrderId = null;
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -332,8 +376,8 @@
                 floor: document.getElementById('floor').value,
                 flat: document.getElementById('flat').value,
                 notes: document.getElementById('notes').value,
-                price: 50,
-                currency: 'GEL',
+                price: 15,
+                currency: 'USD',
                 timestamp: new Date().toISOString()
             };
             
@@ -349,10 +393,18 @@
                 
                 if (response.ok) {
                     const data = await response.json();
+                    savedOrderId = data.orderId;
                     
-                    // Redirect to Stripe payment
-                    // REPLACE THIS URL with your actual Stripe Payment Link
-                    window.location.href = 'https://buy.stripe.com/test_4gMcN6aWA3rvgOg6cP3wQ00';
+                    // Show success message
+                    successMessage.textContent = 'Order details saved! Please complete payment below.';
+                    successMessage.style.display = 'block';
+                    
+                    // Hide form and show PayPal payment
+                    form.classList.add('hidden');
+                    paymentSection.classList.remove('hidden');
+                    
+                    // Initialize PayPal button
+                    initPayPal(formData);
                 } else {
                     throw new Error('Failed to create order');
                 }
@@ -361,9 +413,58 @@
                 errorMessage.textContent = 'Something went wrong. Please try again.';
                 errorMessage.style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Proceed to Payment';
+                submitBtn.textContent = 'Continue to Payment';
             }
         });
+
+        function initPayPal(orderData) {
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: '15.00',
+                                currency_code: 'USD'
+                            },
+                            description: 'INNRBURIAL Book Pre-Order',
+                            custom_id: savedOrderId ? savedOrderId.toString() : ''
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(async function(details) {
+                        // Update order with payment info
+                        try {
+                            await fetch('/api/update-payment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    orderId: savedOrderId,
+                                    paypalOrderId: data.orderID,
+                                    paypalPayerId: data.payerID,
+                                    paymentStatus: 'completed',
+                                    status: 'paid'
+                                })
+                            });
+
+                            // Show success and redirect
+                            alert('Payment successful! Thank you for your order. You will receive a confirmation email shortly.');
+                            window.location.href = 'index.html';
+                        } catch (error) {
+                            console.error('Error updating payment:', error);
+                            alert('Payment completed but there was an error updating your order. Please contact support with order ID: ' + savedOrderId);
+                        }
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    errorMessage.textContent = 'Payment failed. Please try again or contact support.';
+                    errorMessage.style.display = 'block';
+                }
+            }).render('#paypal-button-container');
+        }
     </script>
     <script src="scroll-animations.js"></script>
 </body>
