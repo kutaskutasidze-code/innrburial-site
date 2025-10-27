@@ -20,7 +20,8 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.paypal.com https://*.paypalobjects.com; style-src 'self' 'unsafe-inline' https://*.paypal.com; connect-src 'self' https://*.paypal.com; frame-src https://*.paypal.com; img-src 'self' data: https://*.paypal.com https://*.paypalobjects.com" }
       ]
     }
   ]
